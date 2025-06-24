@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emergency Ambulance Dispatch System</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <style>
+        /* Ensure map fills its container */
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚑 Emergency Ambulance System</h1>
+            <p>Fast, Reliable Emergency Medical Response</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="form-section">
+                <form id="ambulanceForm">
+                    <div class="form-group">
+                        <label for="city">📍 Select City</label>
+                        <select id="city" name="city" required>
+                            <option value="">Choose your city</option>
+                            <option value="delhi">Delhi</option>
+                            <option value="mumbai">Mumbai</option>
+                            <option value="chennai">Chennai</option>
+                            <option value="bangalore">Bangalore</option>
+                            <option value="hyderabad">Hyderabad</option>
+                            <option value="kolkata">Kolkata</option>
+                            <option value="pune">Pune</option>
+                            <option value="ahmedabad">Ahmedabad</option>
+                            <option value="jaipur">Jaipur</option>
+                            <option value="chandigarh">Chandigarh</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="locality">🏘️ Select Locality/Area</label>
+                        <select id="locality" name="locality" required disabled>
+                            <option value="">First select a city</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emergency_type">🏥 Emergency Type</label>
+                        <select id="emergency_type" name="emergency_type" required>
+                            <option value="">Select emergency type</option>
+                            <option value="cardiology">💓 Cardiac Emergency</option>
+                            <option value="trauma">🩹 Accident/Trauma</option>
+                            <option value="neurology">🧠 Neurological Emergency</option>
+                            <option value="respiratory">🫁 Respiratory Emergency</option>
+                            <option value="orthopedics">🦴 Orthopedic Emergency</option>
+                            <option value="pediatrics">👶 Pediatric Emergency</option>
+                            <option value="oncology">🎗️ Oncology Emergency</option>
+                            <option value="psychiatry">🧘 Psychiatric Emergency</option>
+                            <option value="other">❓ Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="severity">⚠️ Severity Level</label>
+                        <select id="severity" name="severity" required>
+                            <option value="">Select severity</option>
+                            <option value="critical">🔴 Critical - Life Threatening</option>
+                            <option value="urgent">🟡 Urgent - Immediate Care</option>
+                            <option value="moderate">🟢 Moderate - Stable</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" class="request-btn" onclick="requestAmbulance()">
+                        🚨 Request Emergency Ambulance
+                    </button>
+                </form>
+            </div>
+            
+            <div class="map-section">
+                <div id="map"></div>
+                
+                <div id="result" class="result-panel" style="display:none;">
+                    <h3>🚑 Emergency Response Details</h3>
+                    <div class="emergency-id">
+                        Emergency ID: <span id="emergency_id"></span>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">🏥 Assigned Hospital</div>
+                        <div class="result-value" id="hospital"></div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">🚑 Ambulance Unit</div>
+                        <div class="result-value" id="ambulance"></div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">⏱️ Estimated Time</div>
+                        <div class="result-value" id="time"></div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">🗺️ Route Status</div>
+                        <div class="result-value" id="route_status">Route plotted on map</div>
+                    </div>
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color route-color"></div>
+                        <span>Emergency Route</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color ambulance-color"></div>
+                        <span>Ambulance Location</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color patient-color"></div>
+                        <span>Patient Location</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color hospital-color"></div>
+                        <span>Hospital Location</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS (only once) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Your JavaScript -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
